@@ -1,14 +1,7 @@
-VersionSan
+RevisionSan
 ==========
 
 Add a revision column with a default of 1.
 Add a revision_parent_id column with a default of nil.
-
-TODO
-====
-
-- Raise RecordNotFound if trying to fetch a older revision.
-- Make RevisionSan::Diff first compare lines, then words.
-- Check ActiveRecord, apperantly find_by etc don't use ::find.
 
 Copyright (c) 2008 Eloy Duran <eloy@fngtps.com>, released under the MIT license
