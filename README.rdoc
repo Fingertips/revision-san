@@ -1,0 +1,29 @@
+= RevisionSan
+
+A simple Rails plugin which creates revisions of your model and comes with an equally simple HTML differ.
+
+== Install
+
+* As a gem:
+    $ sudo gem install Fingertips-revision_san -s http://gems.github.com
+
+* Vendor:
+    $ cd vendor/plugins && git clone git@github.com:Fingertips/revision_san.git
+
+== Usage
+
+Include the RevisionSan module into the model for which you'd like to keep
+revisions.
+
+  class Artist < ActiveRecord::Base
+    include RevisionSan
+  end
+
+And create a migration to add the columns needed by RevisionSan to your model:
+
+  add_column :artists, :revision,           :default => 1
+  add_column :artists, :revision_parent_id, :default => nil
+  
+  add_index  :artists, :revision_parent_id
+
+Copyright © 2008 Fingertips, Eloy Duran <eloy@fngtps.com>, released under the MIT license

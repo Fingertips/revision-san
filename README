@@ -1,7 +1,0 @@
-RevisionSan
-==========
-
-Add a revision column with a default of 1.
-Add a revision_parent_id column with a default of nil.
-
-Copyright (c) 2008 Eloy Duran <eloy@fngtps.com>, released under the MIT license
