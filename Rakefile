@@ -24,7 +24,7 @@ end
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |s|
-    s.name     = "revision_san"
+    s.name     = "revision-san"
     s.homepage = "http://github.com/Fingertips/revision_san"
     s.authors  = ["Eloy Duran"]
     s.email    = "eloy.de.enige@gmail.com"
