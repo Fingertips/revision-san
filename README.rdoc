@@ -1,4 +1,4 @@
-= RevisionSan
+= Revision-San
 
 A simple Rails plugin which creates revisions of your model and comes with an equally simple HTML differ.
 
@@ -19,7 +19,7 @@ revisions.
     include RevisionSan
   end
 
-And create a migration to add the columns needed by RevisionSan to your model:
+And create a migration to add the columns needed by Revision-San to your model:
 
   add_column :artists, :revision,           :default => 1
   add_column :artists, :revision_parent_id, :default => nil
