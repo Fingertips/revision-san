@@ -1,12 +1,11 @@
 require File.expand_path('../revision_san/diff', __FILE__)
 
 module RevisionSan
-  def self.included(klass)
-    klass.class_eval do
-      before_update :create_new_revision
-      named_scope :current_revisions, { :conditions => { :revision_parent_id => nil } }
-      klass.extend ClassMethods
-    end
+  extend ActiveSupport::Concern
+
+  included do
+    before_update :create_new_revision
+    scope :current_revisions, { :conditions => { :revision_parent_id => nil } }
   end
   
   module ClassMethods
