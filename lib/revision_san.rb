@@ -1,4 +1,4 @@
-require File.expand_path('../revision_san/diff', __FILE__)
+require 'revision_san/diff'
 
 module RevisionSan
   extend ActiveSupport::Concern
