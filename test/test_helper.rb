@@ -1,32 +1,12 @@
 module RevisionSanTest
   module Initializer
-    VENDOR_RAILS = File.expand_path('../../../../rails', __FILE__)
-    OTHER_RAILS = File.expand_path('../../../rails', __FILE__)
-    PLUGIN_ROOT = File.expand_path('../../', __FILE__)
-    
-    def self.rails_directory
-      if File.exist?(VENDOR_RAILS)
-        VENDOR_RAILS
-      elsif File.exist?(OTHER_RAILS)
-        OTHER_RAILS
-      end
-    end
-    
     def self.load_dependencies
-      if rails_directory
-        $:.unshift(File.join(rails_directory, 'activesupport', 'lib'))
-        $:.unshift(File.join(rails_directory, 'activerecord', 'lib'))
-      else
-        require 'rubygems' rescue LoadError
-      end
-      
-      require 'activesupport'
-      require 'activerecord'
-      
-      require 'rubygems' rescue LoadError
-      
-      require 'test/spec'
-      require File.join(PLUGIN_ROOT, 'lib', 'revision_san')
+      require 'active_record'
+      require 'sqlite3'
+
+      require 'bacon'
+
+      require 'revision_san'
     end
     
     def self.configure_database

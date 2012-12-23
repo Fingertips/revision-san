@@ -27,4 +27,8 @@ Gem::Specification.new do |s|
     end
   else
   end
+
+  s.add_dependency 'activerecord', '~> 3.2'
+  s.add_development_dependency 'bacon'
+  s.add_development_dependency 'sqlite3'
 end
