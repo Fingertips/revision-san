@@ -21,8 +21,8 @@ revisions.
 
 And create a migration to add the columns needed by Revision-San to your model:
 
-  add_column :artists, :revision,           :default => 1
-  add_column :artists, :revision_parent_id, :default => nil
+  add_column :artists, :revision, :integer,           :default => 1
+  add_column :artists, :revision_parent_id, :integer, :default => nil
   
   add_index  :artists, :revision_parent_id
 
