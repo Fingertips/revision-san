@@ -1,12 +1,11 @@
 require File.expand_path('../revision_san/diff', __FILE__)
 
 module RevisionSan
-  def self.included(klass)
-    klass.class_eval do
-      before_update :create_new_revision
-      named_scope :current_revisions, { :conditions => { :revision_parent_id => nil } }
-      klass.extend ClassMethods
-    end
+  extend ActiveSupport::Concern
+
+  included do
+    before_update :create_new_revision
+    scope :current_revisions, { :conditions => { :revision_parent_id => nil } }
   end
   
   module ClassMethods
@@ -41,9 +40,9 @@ module RevisionSan
     if changed?
       record = self.class.new(:revision_parent_id => id)
       attributes.except('id', 'revision_parent_id').each do |key, value|
-        record.write_attribute(key, changes.has_key?(key) ? changes[key].first : value)
+        record.send(:write_attribute, key, changes.has_key?(key) ? changes[key].first : value)
       end
-      record.save(false)
+      record.save(:validate => false)
       self.revision += 1
     end
   end
