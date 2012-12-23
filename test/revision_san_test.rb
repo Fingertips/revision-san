@@ -1,6 +1,4 @@
-require File.expand_path('../test_helper', __FILE__)
-
-require 'active_support/testing/core_ext/test/unit/assertions'
+require_relative 'test_helper'
 
 describe "RevisionSan, looking at model methods" do
   before do
@@ -42,7 +40,7 @@ describe "RevisionSan, looking at model methods" do
   end
   
   it "should convert a requested revision to an integer before using in the conditions" do
-    @artist.fetch_revision('some evil sql that will be coerced to 0').should.be nil
+    @artist.fetch_revision('some evil sql that will be coerced to 0').should.be.nil
   end
 end
 
@@ -59,9 +57,9 @@ describe "RevisionSan, when updating a record" do
   end
   
   it "should insert a new revision of a record" do
-    assert_difference('Artist.count_without_current_revisions', +1) do
+    lambda {
       @artist.update_attributes(:name => 'Vincent van Gogh JR', :bio => 'Was never born.')
-    end
+    }.should.change { Artist.count_without_current_revisions }
   end
   
   it "should add the original attributes to the new revision record" do
@@ -74,21 +72,21 @@ describe "RevisionSan, when updating a record" do
     sleep 1
     @artist.update_attribute(:name, 'Gogh')
     
-    @artist.revisions.first.created_at.should.not == created_at_before
+    @artist.revisions.first.created_at.should.not.be.same_as created_at_before
   end
   
   it "should not create a new revision record if no attributes were changed" do
-    assert_no_difference('Artist.count') do
+    lambda {
       @artist.update_attributes({})
-    end
+    }.should.not.change { Artist.count }
   end
   
   it "should not create a new revision if validation fails on the original record" do
-    assert_no_difference('@artist.revision') do
-      assert_no_difference('Artist.count') do
+    lambda {
+      lambda {
         @artist.update_attributes({ :name => '', :bio => 'Lost his name...' })
-      end
-    end
+      }.should.not.change { Artist.count }
+    }.should.not.change { @artist.revision }
   end
 end
 

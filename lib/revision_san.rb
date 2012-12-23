@@ -40,9 +40,9 @@ module RevisionSan
     if changed?
       record = self.class.new(:revision_parent_id => id)
       attributes.except('id', 'revision_parent_id').each do |key, value|
-        record.write_attribute(key, changes.has_key?(key) ? changes[key].first : value)
+        record.send(:write_attribute, key, changes.has_key?(key) ? changes[key].first : value)
       end
-      record.save(false)
+      record.save(:validate => false)
       self.revision += 1
     end
   end

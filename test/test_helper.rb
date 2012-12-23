@@ -10,7 +10,7 @@ module RevisionSanTest
     end
     
     def self.configure_database
-      ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :dbfile => ":memory:")
+      ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :database => ":memory:")
       ActiveRecord::Migration.verbose = false
     end
     
