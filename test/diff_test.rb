@@ -12,6 +12,26 @@ class DiffTestEntity
   end
 end
 
+def long_text
+  {
+    :before => %{Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Fusce gravida. Ut orci orci, molestie et, scelerisque ut, faucibus pharetra, enim. Morbi vehicula consequat nunc. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Quisque ac orci. Proin adipiscing tempor erat. Phasellus gravida tincidunt sapien. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In venenatis libero sit amet quam. Nam sapien diam, tempor placerat, feugiat quis, congue in, elit. Vivamus nec enim eget elit posuere tincidunt. Quisque scelerisque lobortis risus. Quisque cursus dolor sit amet arcu.
+
+Suspendisse auctor. Quisque sodales dapibus pede. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras blandit tellus id libero. Morbi sed purus sed sapien ornare facilisis. Vestibulum rutrum egestas mauris. Vestibulum luctus velit vitae ante. In dictum, metus sed lacinia sagittis, leo diam elementum tortor, rutrum elementum justo tellus eget risus. Curabitur faucibus mauris eget nisi. Nam mattis nunc eget turpis. In porta. Aliquam risus ante, sodales quis, consequat vitae, fermentum ut, nisi. Etiam congue ipsum id ante aliquet dictum.},
+    
+    :after => %{Landscape architecture involves the investigation and designed response to the landscape. The scope of the profession includes architectural design, site planning, environmental restoration, town or urban planning, urban design, parks and recreation planning. A practitioner in the field of landscape architecture is called a landscape architect.
+
+Suspendisse auctor. Quisque sodales dapibus pede. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras blandit tellus id libero. Morbi sed purus sed sapien ornare facilisis. Vestibulum rutrum egestas mauris. Vestibulum luctus velit vitae ante. In dictum, metus sed lacinia sagittis, leo diam elementum tortor, rutrum elementum justo tellus eget risus. Curabitur faucibus mauris eget nisi. Nam mattis nunc eget turpis. In porta. Aliquam risus ante, sodales quis, consequat vitae, fermentum ut, nisi. Etiam congue ipsum id ante aliquet dictum.},
+    
+    :diff => %{<del>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Fusce gravida. Ut orci orci, molestie et, scelerisque ut, faucibus pharetra, enim. Morbi vehicula consequat nunc. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Quisque ac orci. Proin adipiscing tempor erat. Phasellus gravida tincidunt sapien. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In venenatis libero sit amet quam. Nam sapien diam, tempor placerat, feugiat quis, congue in, elit. Vivamus nec enim eget elit posuere tincidunt. Quisque scelerisque lobortis risus. Quisque cursus dolor sit amet arcu.</del><ins>Landscape architecture involves the investigation and designed response to the landscape. The scope of the profession includes architectural design, site planning, environmental restoration, town or urban planning, urban design, parks and recreation planning. A practitioner in the field of landscape architecture is called a landscape architect.</ins>
+
+Suspendisse auctor. Quisque sodales dapibus pede. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras blandit tellus id libero. Morbi sed purus sed sapien ornare facilisis. Vestibulum rutrum egestas mauris. Vestibulum luctus velit vitae ante. In dictum, metus sed lacinia sagittis, leo diam elementum tortor, rutrum elementum justo tellus eget risus. Curabitur faucibus mauris eget nisi. Nam mattis nunc eget turpis. In porta. Aliquam risus ante, sodales quis, consequat vitae, fermentum ut, nisi. Etiam congue ipsum id ante aliquet dictum.}
+  }
+end
+
+def diff_html(from, to)
+  RevisionSan::Diff.new(DiffTestEntity.new(from), DiffTestEntity.new(to)).text
+end
+
 describe "RevisionSan::Diff" do
   it "should return correctly formatted html" do
     [
@@ -27,28 +47,6 @@ describe "RevisionSan::Diff" do
     ].each do |from, to, html|
       diff_html(from, to).should == html
     end
-  end
-  
-  def long_text
-    {
-      :before => %{Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Fusce gravida. Ut orci orci, molestie et, scelerisque ut, faucibus pharetra, enim. Morbi vehicula consequat nunc. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Quisque ac orci. Proin adipiscing tempor erat. Phasellus gravida tincidunt sapien. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In venenatis libero sit amet quam. Nam sapien diam, tempor placerat, feugiat quis, congue in, elit. Vivamus nec enim eget elit posuere tincidunt. Quisque scelerisque lobortis risus. Quisque cursus dolor sit amet arcu.
-
-Suspendisse auctor. Quisque sodales dapibus pede. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras blandit tellus id libero. Morbi sed purus sed sapien ornare facilisis. Vestibulum rutrum egestas mauris. Vestibulum luctus velit vitae ante. In dictum, metus sed lacinia sagittis, leo diam elementum tortor, rutrum elementum justo tellus eget risus. Curabitur faucibus mauris eget nisi. Nam mattis nunc eget turpis. In porta. Aliquam risus ante, sodales quis, consequat vitae, fermentum ut, nisi. Etiam congue ipsum id ante aliquet dictum.},
-      
-      :after => %{Landscape architecture involves the investigation and designed response to the landscape. The scope of the profession includes architectural design, site planning, environmental restoration, town or urban planning, urban design, parks and recreation planning. A practitioner in the field of landscape architecture is called a landscape architect.
-
-Suspendisse auctor. Quisque sodales dapibus pede. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras blandit tellus id libero. Morbi sed purus sed sapien ornare facilisis. Vestibulum rutrum egestas mauris. Vestibulum luctus velit vitae ante. In dictum, metus sed lacinia sagittis, leo diam elementum tortor, rutrum elementum justo tellus eget risus. Curabitur faucibus mauris eget nisi. Nam mattis nunc eget turpis. In porta. Aliquam risus ante, sodales quis, consequat vitae, fermentum ut, nisi. Etiam congue ipsum id ante aliquet dictum.},
-      
-      :diff => %{<del>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Fusce gravida. Ut orci orci, molestie et, scelerisque ut, faucibus pharetra, enim. Morbi vehicula consequat nunc. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Quisque ac orci. Proin adipiscing tempor erat. Phasellus gravida tincidunt sapien. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In venenatis libero sit amet quam. Nam sapien diam, tempor placerat, feugiat quis, congue in, elit. Vivamus nec enim eget elit posuere tincidunt. Quisque scelerisque lobortis risus. Quisque cursus dolor sit amet arcu.</del><ins>Landscape architecture involves the investigation and designed response to the landscape. The scope of the profession includes architectural design, site planning, environmental restoration, town or urban planning, urban design, parks and recreation planning. A practitioner in the field of landscape architecture is called a landscape architect.</ins>
-
-Suspendisse auctor. Quisque sodales dapibus pede. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras blandit tellus id libero. Morbi sed purus sed sapien ornare facilisis. Vestibulum rutrum egestas mauris. Vestibulum luctus velit vitae ante. In dictum, metus sed lacinia sagittis, leo diam elementum tortor, rutrum elementum justo tellus eget risus. Curabitur faucibus mauris eget nisi. Nam mattis nunc eget turpis. In porta. Aliquam risus ante, sodales quis, consequat vitae, fermentum ut, nisi. Etiam congue ipsum id ante aliquet dictum.}
-    }
-  end
-  
-  private
-  
-  def diff_html(from, to)
-    RevisionSan::Diff.new(DiffTestEntity.new(from), DiffTestEntity.new(to)).text
   end
 end
 
