@@ -44,7 +44,8 @@ describe "RevisionSan::Diff" do
       ["Bar!", "Baz!", "<del>Bar</del><ins>Baz</ins>!"],
       ["Begin\n\nEnd", "Begin\n\nMiddle\n\nEnd", "Begin\n\n<ins>Middle\n\n</ins>End"],
       ["Multiple added.", "Multiple words are added.", "Multiple <ins>words are </ins>added."],
-      ["Multiple words are removed.", "Multiple removed.", "Multiple <del>words are </del>removed."]
+      ["Multiple words are removed.", "Multiple removed.", "Multiple <del>words are </del>removed."],
+      ["a\nb\nc\nd\n", "a\nc\nb\nd\n", "a\n<del>b</del><ins>c</ins>\nc\n<ins>b\n</ins>d\n"]
     ].each do |from, to, html|
       diff_html(from, to).should == html
     end

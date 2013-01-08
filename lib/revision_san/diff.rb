@@ -63,7 +63,7 @@ module RevisionSan
         
         def initialize(from, to)
           @output = []
-          @went_deep = false
+          @ignore_next_new_element = false
           ::Diff::LCS.traverse_sequences(from, to, self)
         end
         
@@ -74,13 +74,13 @@ module RevisionSan
             @output << "<del>#{change.old_element}</del>"
           else
             @output << WordDiffHTMLFormatter.new(from_words, to_words).output
-            @went_deep = true
+            @ignore_next_new_element = change.new_element
           end
         end
         
         def discard_b(change)
-          if @went_deep
-            @went_deep = false
+          if @ignore_next_new_element == change.new_element
+            @ignore_next_new_element = false
           else
             @output << "<ins>#{change.new_element}</ins>"
           end
