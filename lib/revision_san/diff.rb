@@ -20,13 +20,11 @@ module RevisionSan
       @from, @to = from, to
     end
     
-    def diff_for_column(column)
-      from_lines, to_lines = [@from.send(column), @to.send(column)].map do |res|
-        text = res.blank? ? '' : res.to_s
-        text = yield(text) if block_given?
-        text.scan(/\n+|.+/)
-      end
-      SimpleHTMLFormatter.diff(from_lines, to_lines)
+    def diff_for_column(column, &block)
+      SimpleHTMLFormatter.diff(
+        self.class.split(@from.send(column), &block),
+        self.class.split(@to.send(column), &block)
+      )
     end
     
     def method_missing(method, *args, &block)
@@ -45,6 +43,12 @@ module RevisionSan
         
         #{method}(&block)
       }
+    end
+    
+    def self.split(text, &block)
+      text = text.to_s
+      text = block.call(text) if block_given?
+      text.lines.to_a
     end
     
     module SimpleHTMLFormatter
